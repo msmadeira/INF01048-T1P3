@@ -2,33 +2,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def h_theta(x, theta_0, theta_1):
+    return theta_0 + (x * theta_1)
+
+
 def compute_cost(theta_0, theta_1, data):
-    """
-    Calcula o erro quadratico medio
+    x = np.array(data[:, 46])
+    x = np.delete(x, 0)
+    x = np.array([minmax_scaling(xi, np.min(x), np.max(x)) for xi in x])
+    y = np.array(data[:, 80])
+    y = np.delete(y, 0)
 
-    Args:
-        theta_0 (float): intercepto da reta
-        theta_1 (float): inclinacao da reta
-        data (np.array): matriz com o conjunto de dados, x na coluna 0 e y na coluna 1
+    summation = 0
+    for i in range(x.size):
+        u = (theta_0 + (x[i] * theta_1)) - y[i]
+        summation += pow(u, 2)
 
-    Retorna:
-        float: o erro quadratico medio
-    """
-    total_cost = 0
-
-    ### SEU CODIGO AQUI
+    total_cost = summation / x.size
 
     return total_cost
-
-
-def test_compute_cost(data):
-    theta_0_test = 0
-    theta_1_test = 0
-    # comparacao de floats com tolerancia 1E-11
-    if abs(compute_cost(theta_0_test, theta_1_test, data) - 5565.107834483211) < 1E-11:
-      print("Erro Quadratico Medio passou no teste")
-    else:
-      print("ERRO NO CALCULO DO ERRO QUADRATICO MEDIO!")
 
 
 def step_gradient(theta_0_current, theta_1_current, data, alpha):
@@ -50,28 +42,6 @@ def step_gradient(theta_0_current, theta_1_current, data, alpha):
     ### SEU CODIGO AQUI
 
     return theta_0_updated, theta_1_updated
-
-
-def test_step_gradient():
-    # dataset copiado do Quiz de Otimizacao Continua
-    other_data = np.array([
-        [1, 3],
-        [2, 4],
-        [3, 4],
-        [4, 2]
-    ])
-
-    new_theta0, new_theta1 = step_gradient(1, 1, other_data, alpha=0.1)
-    # comparacao de floats com tolerancia 1E-11
-    if abs(new_theta0 - 0.95) < 1E-11:
-        print("Atualizacao de theta0 OK")
-    else:
-        print("ERRO NA ATUALIZACAO DE theta0!")
-
-    if abs(new_theta1 - 0.55) < 1E-11:
-        print("Atualizacao de theta1 OK")
-    else:
-        print("ERRO NA ATUALIZACAO DE theta1!")
 
 
 def gradient_descent(data, starting_theta_0, starting_theta_1, learning_rate, num_iterations):
@@ -117,17 +87,18 @@ def minmax_scaling(x, xmin, xmax):
 house_prices_data = np.genfromtxt('house_prices_train.csv', delimiter=',')
 
 # Extrair colunas para análise
-ids = np.array(house_prices_data[:, 0])
-ids = np.delete(ids, 0)
-living_area = np.array(house_prices_data[:, 46])
-living_area = np.delete(living_area, 0)
-
-living_area = np.array([minmax_scaling(x, np.min(living_area), np.max(living_area)) for x in living_area])
-
-# Gráfico dos dados
-plt.figure(figsize=(20, 12))
-plt.scatter(ids, living_area)
-plt.xlabel('Ids')
-plt.ylabel('Área da Sala de Estar')
-plt.title('Dados')
-plt.show()
+# ids = np.array(house_prices_data[:, 0])
+# ids = np.delete(ids, 0)
+# living_area = np.array(house_prices_data[:, 46])
+# living_area = np.delete(living_area, 0)
+# sales_price = np.array(house_prices_data[:, 80])
+# sales_price = np.delete(sales_price, 0)
+#
+# living_area = np.array([minmax_scaling(x, np.min(living_area), np.max(living_area)) for x in living_area])
+#
+# plt.figure(figsize=(20, 12))
+# plt.scatter(ids, living_area)
+# plt.xlabel('Ids')
+# plt.ylabel('Área da Sala de Estar')
+# plt.title('Dados')
+# plt.show()
