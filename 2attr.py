@@ -13,6 +13,7 @@ def compute_cost(theta_0, theta_1, theta_2, data):
     y = np.delete(y, 0)
     z = np.array(data[:, 17])
     z = np.delete(z, 0)
+    z = np.array([minmax_scaling(zi, np.min(z), np.max(z)) for zi in z])
 
     summation = 0
     for i in range(x.size):
@@ -31,6 +32,7 @@ def step_gradient(theta_0_current, theta_1_current, theta_2_current, data, alpha
     y = np.delete(y, 0)
     z = np.array(data[:, 17])
     z = np.delete(z, 0)
+    z = np.array([minmax_scaling(zi, np.min(z), np.max(z)) for zi in z])
 
     summation0 = 0
     summation1 = 0
@@ -84,7 +86,7 @@ theta_0, theta_1, theta_2, cost_graph, theta_0_progress, theta_1_progress, theta
     starting_theta_0=0,
     starting_theta_1=0,
     starting_theta_2=0,
-    learning_rate=0.1,
+    learning_rate=0.01,
     num_iterations=100)
 
 # Imprimir parâmetros otimizados
