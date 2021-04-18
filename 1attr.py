@@ -90,13 +90,13 @@ print ('Theta_1 otimizado: ', theta_1)
 print ('Custo minimizado: ', compute_cost(theta_0, theta_1, house_prices_data))
 
 #Gráfico de dispersão do conjunto de dados
-plt.figure(figsize=(10, 6))
-plt.scatter(living_area, sales_price)
+# plt.figure(figsize=(10, 6))
+# plt.scatter(living_area, sales_price)
 #Valores preditos de y
-pred = theta_1 * living_area + theta_0
+# pred = theta_1 * living_area + theta_0
 #Gráfico de linha do melhor ajuste
-plt.plot(living_area, pred, c='r')
-plt.xlabel('Área da Sala de Estar')
-plt.ylabel('Preço')
-plt.title('Data')
-plt.show()
+# plt.plot(living_area, pred, c='r')
+# plt.xlabel('Área da Sala de Estar')
+# plt.ylabel('Preço')
+# plt.title('Data')
+# plt.show()
