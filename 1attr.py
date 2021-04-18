@@ -70,26 +70,25 @@ def minmax_scaling(x, xmin, xmax):
 
 house_prices_data = np.genfromtxt('house_prices_train.csv', delimiter=',')
 
-# Extrair colunas para análise
-living_area = np.array(house_prices_data[:, 46])
-living_area = np.delete(living_area, 0)
-sales_price = np.array(house_prices_data[:, 80])
-sales_price = np.delete(sales_price, 0)
-
-living_area = np.array([minmax_scaling(x, np.min(living_area), np.max(living_area)) for x in living_area])
-
 theta_0, theta_1, cost_graph, theta_0_progress, theta_1_progress = gradient_descent(house_prices_data,
                                                                                     starting_theta_0=0,
                                                                                     starting_theta_1=0,
                                                                                     learning_rate=0.01,
                                                                                     num_iterations=100)
 
-#Imprimir parâmetros otimizados
-print ('theta_0: ', theta_0)
-print ('theta_1: ', theta_1)
-print ('Erro quadratico medio: ', compute_cost(theta_0, theta_1, house_prices_data))
+# Imprimir parâmetros otimizados
+print('theta_0: ', theta_0)
+print('theta_1: ', theta_1)
+print('Erro quadratico medio: ', compute_cost(theta_0, theta_1, house_prices_data))
 
-#Gráfico de dispersão do conjunto de dados
+# Gráfico de dispersão do conjunto de dados
+# living_area = np.array(house_prices_data[:, 46])
+# living_area = np.delete(living_area, 0)
+# sales_price = np.array(house_prices_data[:, 80])
+# sales_price = np.delete(sales_price, 0)
+#
+# living_area = np.array([minmax_scaling(x, np.min(living_area), np.max(living_area)) for x in living_area])
+#
 # plt.figure(figsize=(10, 6))
 # plt.scatter(living_area, sales_price)
 # pred = theta_1 * living_area + theta_0
