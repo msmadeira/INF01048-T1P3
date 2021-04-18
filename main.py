@@ -110,16 +110,24 @@ def gradient_descent(data, starting_theta_0, starting_theta_1, learning_rate, nu
     return [theta_0, theta_1, cost_graph, theta_0_progress, theta_1_progress]
 
 
+def minmax_scaling(x, xmin, xmax):
+    return (x - xmin) / (xmax - xmin)
+
+
 house_prices_data = np.genfromtxt('house_prices_train.csv', delimiter=',')
 
-#Extrair colunas para análise
-# ids = np.array(data[:, 0])
-# living_area = np.array(data[:, 46])
-#
-# #Gráfico dos dados
-# plt.figure(figsize=(20, 12))
-# plt.scatter(ids, living_area)
-# plt.xlabel('Ids')
-# plt.ylabel('Área da Sala de Estar')
-# plt.title('Dados')
-# plt.show()
+# Extrair colunas para análise
+ids = np.array(house_prices_data[:, 0])
+ids = np.delete(ids, 0)
+living_area = np.array(house_prices_data[:, 46])
+living_area = np.delete(living_area, 0)
+
+living_area = np.array([minmax_scaling(x, np.min(living_area), np.max(living_area)) for x in living_area])
+
+# Gráfico dos dados
+plt.figure(figsize=(20, 12))
+plt.scatter(ids, living_area)
+plt.xlabel('Ids')
+plt.ylabel('Área da Sala de Estar')
+plt.title('Dados')
+plt.show()
