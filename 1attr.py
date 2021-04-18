@@ -37,7 +37,7 @@ def step_gradient(theta_0_current, theta_1_current, data, alpha):
         summation1 += u * x[i]
 
     theta_0_updated = theta_0_current - (2 * alpha) * (summation0 / x.size)
-    theta_1_updated = theta_0_current - (2 * alpha) * (summation1 / x.size)
+    theta_1_updated = theta_1_current - (2 * alpha) * (summation1 / x.size)
 
     return theta_0_updated, theta_1_updated
 
@@ -82,7 +82,7 @@ theta_0, theta_1, cost_graph, theta_0_progress, theta_1_progress = gradient_desc
                                                                                     starting_theta_0=0,
                                                                                     starting_theta_1=0,
                                                                                     learning_rate=0.01,
-                                                                                    num_iterations=400)
+                                                                                    num_iterations=100)
 
 #Imprimir parâmetros otimizados
 print ('Theta_0 otimizado: ', theta_0)
@@ -90,13 +90,11 @@ print ('Theta_1 otimizado: ', theta_1)
 print ('Custo minimizado: ', compute_cost(theta_0, theta_1, house_prices_data))
 
 #Gráfico de dispersão do conjunto de dados
-# plt.figure(figsize=(10, 6))
-# plt.scatter(living_area, sales_price)
-#Valores preditos de y
-# pred = theta_1 * living_area + theta_0
-#Gráfico de linha do melhor ajuste
-# plt.plot(living_area, pred, c='r')
-# plt.xlabel('Área da Sala de Estar')
-# plt.ylabel('Preço')
-# plt.title('Data')
-# plt.show()
+plt.figure(figsize=(10, 6))
+plt.scatter(living_area, sales_price)
+pred = theta_1 * living_area + theta_0
+plt.plot(living_area, pred, c='r')
+plt.xlabel('Área da Sala de Estar')
+plt.ylabel('Preço')
+plt.title('Data')
+plt.show()
