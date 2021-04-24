@@ -1,11 +1,33 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
-def compute_u(theta_0, theta_1, theta_2, xi, yi, zi):
-    return (theta_0 + (xi * theta_1) + (zi * theta_2)) - yi
+def print_graph(data, is_theta=False, is_cost=False):
+    living_area, sales_price, overall_quality = get_properties(data)
+
+    plt.figure(figsize=(10, 6))
+
+    if is_theta:
+        plt.scatter(range(iterations), theta0_progress)
+        plt.scatter(range(iterations), theta1_progress)
+        plt.scatter(range(iterations), theta2_progress)
+        plt.xlabel('Thetas')
+        plt.ylabel('Iterações')
+    elif is_cost:
+        plt.scatter(range(iterations), cost)
+        plt.xlabel('Custo')
+        plt.ylabel('Iterações')
+    else:
+        plt.scatter(overall_quality + living_area, sales_price)
+        pred = theta0 + (living_area * theta1) + (overall_quality * theta2)
+        plt.scatter(living_area + overall_quality, pred)
+        plt.xlabel('Parametros')
+        plt.ylabel('Preço')
+    plt.title('Data')
+    plt.show()
 
 
-def compute_cost(theta_0, theta_1, theta_2, data):
+def get_properties(data):
     x = np.array(data[:, 46])
     x = np.delete(x, 0)
     x = np.array([minmax_scaling(xi, np.min(x), np.max(x)) for xi in x])
@@ -14,6 +36,20 @@ def compute_cost(theta_0, theta_1, theta_2, data):
     z = np.array(data[:, 17])
     z = np.delete(z, 0)
     z = np.array([minmax_scaling(zi, np.min(z), np.max(z)) for zi in z])
+
+    return x, y, z
+
+
+def h0(theta_0, theta_1, theta_2, xi, zi):
+    return theta_0 + (xi * theta_1) + (zi * theta_2)
+
+
+def compute_u(theta_0, theta_1, theta_2, xi, yi, zi):
+    return h0(theta_0, theta_1, theta_2, xi, zi) - yi
+
+
+def compute_cost(theta_0, theta_1, theta_2, data):
+    x, y, z = get_properties(data)
 
     summation = 0
     for i in range(x.size):
@@ -25,14 +61,7 @@ def compute_cost(theta_0, theta_1, theta_2, data):
 
 
 def step_gradient(theta_0_current, theta_1_current, theta_2_current, data, alpha):
-    x = np.array(data[:, 46])
-    x = np.delete(x, 0)
-    x = np.array([minmax_scaling(xi, np.min(x), np.max(x)) for xi in x])
-    y = np.array(data[:, 80])
-    y = np.delete(y, 0)
-    z = np.array(data[:, 17])
-    z = np.delete(z, 0)
-    z = np.array([minmax_scaling(zi, np.min(z), np.max(z)) for zi in z])
+    x, y, z = get_properties(data)
 
     summation0 = 0
     summation1 = 0
@@ -59,7 +88,7 @@ def gradient_descent(data, starting_theta_0, starting_theta_1, starting_theta_2,
     # variável para armazenar o custo ao final de cada step_gradient
     cost_graph = []
 
-    # vetores para armazenar os valores de Theta0 e Theta1 apos cada iteração de step_gradient (pred = Theta1*x + Theta0)
+    # vetores para armazenar Theta0 e Theta1 apos cada iteração de step_gradient (pred = Theta1*x + Theta0)
     theta_0_progress = []
     theta_1_progress = []
     theta_2_progress = []
@@ -81,16 +110,20 @@ def minmax_scaling(x, xmin, xmax):
 
 house_prices_data = np.genfromtxt('house_prices_train.csv', delimiter=',')
 
-theta_0, theta_1, theta_2, cost_graph, theta_0_progress, theta_1_progress, theta_2_progress = gradient_descent(
+iterations = 300
+
+theta0, theta1, theta2, cost, theta0_progress, theta1_progress, theta2_progress = gradient_descent(
     house_prices_data,
     starting_theta_0=0,
     starting_theta_1=0,
     starting_theta_2=0,
     learning_rate=0.01,
-    num_iterations=100)
+    num_iterations=iterations)
 
 # Imprimir parâmetros otimizados
-print('theta_0: ', theta_0)
-print('theta_1: ', theta_1)
-print('theta_2: ', theta_2)
-print('Erro quadratico medio: ', compute_cost(theta_0, theta_1, theta_2, house_prices_data))
+print('theta_0: ', theta0)
+print('theta_1: ', theta1)
+print('theta_2: ', theta2)
+print('Erro quadratico medio: ', compute_cost(theta0, theta1, theta2, house_prices_data))
+
+# print_graph(house_prices_data, False, True)
