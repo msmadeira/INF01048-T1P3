@@ -2,11 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-sys_argv = sys.argv
-file_argv = sys_argv[1]
-iterations_argv = sys_argv[2]
+# >>> DESCOMENTAR PARA ENTREGA <<<
+# sys_argv = sys.argv
+# file_argv = sys_argv[1]
+# iterations_argv = sys_argv[2]
 
-// >>> COMENTAR PARA ENTREGA <<<
+# >>> COMENTAR PARA ENTREGA <<<
 file_argv = 'house_prices_train.csv'
 iterations_argv = 300
 
