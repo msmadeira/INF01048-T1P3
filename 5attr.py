@@ -1,6 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
+sys_argv = sys.argv
+file_argv = sys_argv[1]
+iterations_argv = sys_argv[2]
+
+// >>> COMENTAR PARA ENTREGA <<<
+file_argv = 'house_prices_train.csv'
+iterations_argv = 300
 
 def print_graph(data, is_theta=False, is_cost=False):
     living_area, overall_quality, overall_condition, garage_area, year_built, sales_price = get_properties(data)
@@ -139,9 +147,9 @@ def minmax_scaling(x, xmin, xmax):
     return (x - xmin) / (xmax - xmin)
 
 
-house_prices_data = np.genfromtxt('house_prices_train.csv', delimiter=',')
+house_prices_data = np.genfromtxt(file_argv, delimiter=',')
 
-iterations = 300
+iterations = iterations_argv
 
 theta0, theta1, theta2, theta3, theta4, theta5, cost, theta0_progress, theta1_progress, theta2_progress, theta3_progress, theta4_progress, theta5_progress = gradient_descent(
     house_prices_data,
