@@ -11,18 +11,19 @@ iterations_argv = int(sys_argv[2])
 # file_argv = 'house_prices_train.csv'
 # iterations_argv = 300
 
+
 def print_graph(data, is_theta=False, is_cost=False):
     living_area, sales_price = get_properties(data)
 
     plt.figure(figsize=(10, 6))
 
     if is_theta:
-        plt.scatter(range(iterations_argv), theta0_progress)
-        plt.scatter(range(iterations_argv), theta1_progress)
+        plt.scatter(range(iterations), theta0_progress)
+        plt.scatter(range(iterations), theta1_progress)
         plt.xlabel('Thetas')
         plt.ylabel('Iterações')
     elif is_cost:
-        plt.scatter(range(iterations_argv), cost)
+        plt.scatter(range(iterations), cost)
         plt.xlabel('Custo')
         plt.ylabel('Iterações')
     else:

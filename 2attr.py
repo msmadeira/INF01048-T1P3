@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 import sys
 
 # >>> DESCOMENTAR PARA ENTREGA <<<
-# sys_argv = sys.argv
-# file_argv = sys_argv[1]
-# iterations_argv = sys_argv[2]
+sys_argv = sys.argv
+file_argv = sys_argv[1]
+iterations_argv = int(sys_argv[2])
 
 # >>> COMENTAR PARA ENTREGA <<<
-file_argv = 'house_prices_train.csv'
-iterations_argv = 300
+# file_argv = 'house_prices_train.csv'
+# iterations_argv = 300
+
 
 def print_graph(data, is_theta=False, is_cost=False):
     living_area, sales_price, overall_quality = get_properties(data)
